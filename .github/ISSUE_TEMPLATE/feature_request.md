@@ -7,6 +7,6 @@ assignees: ''
 
 ---
 
-## Issue :
+## ✅ Issue :
 
 ## Description
