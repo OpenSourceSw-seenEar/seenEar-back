@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .securitySchemes(Arrays.asList(apiKey()))
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.onna.onnaback.domain"))
+                .apis(RequestHandlerSelectors.basePackage("com.youT.seenEar.domain"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
@@ -37,8 +37,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("ON;na API")
-                .description("ON;na API입니다")
+                .title("seenEar API")
+                .description("seenEar API입니다")
                 .version("1.0")
                 .build();
     }
