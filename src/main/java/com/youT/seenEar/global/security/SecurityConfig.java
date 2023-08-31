@@ -24,6 +24,7 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final LoginService oAuthLoginService;
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
