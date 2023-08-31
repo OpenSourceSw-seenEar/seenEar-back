@@ -37,7 +37,6 @@ public class OAuthLoginService {
 
         member.updateRefreshToken(serviceRefreshToken);
         return LoginResponse.builder()
-                .memberEmail(member.getEmail())
                 .uuid(member.getUuid())
                 .accessToken(serviceAccessToken)
                 .refreshToken(serviceRefreshToken)
