@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.youT.seenEar.domain.member.adapter.out.persistence.MemberRepository;
 import com.youT.seenEar.domain.member.application.service.JwtService;
-import com.youT.seenEar.domain.member.application.service.OAuthLoginService;
+import com.youT.seenEar.domain.member.application.service.LoginService;
 import com.youT.seenEar.global.jwt.filter.JwtAuthenticationFilter;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +18,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.Filter;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final OAuthLoginService oAuthLoginService;
+    private final LoginService oAuthLoginService;
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
     private final ObjectMapper objectMapper;

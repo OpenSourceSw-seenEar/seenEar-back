@@ -40,7 +40,7 @@ public class JwtService {
 
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String EMAIL_CLAIM = "email";
+    private static final String UUID_CLAIM = "uuid";
     private static final String BEARER = "Bearer ";
 
     private final int accessTokenExpirationPeriod = 3600000;
@@ -100,14 +100,14 @@ public class JwtService {
 
 
     //토큰 발급
-    public String createAccessToken(String email) {
+    public String createAccessToken(String uuid) {
         try {
             Date now = new Date();
             log.info("access token 발급");
             return JWT.create()
                     .withSubject(ACCESS_TOKEN_SUBJECT)
                     .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod))
-                    .withClaim(EMAIL_CLAIM, email)
+                    .withClaim(UUID_CLAIM,uuid)
                     .sign(Algorithm.HMAC512(this.secretKey));
         } catch (Exception e) {
             // 예외 처리
@@ -118,11 +118,11 @@ public class JwtService {
 
     }
 
-    public  String createRefreshToken(String email) {
+    public  String createRefreshToken(String uuid) {
         Date now = new Date();
         return JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
-                .withClaim(EMAIL_CLAIM,email)
+                .withClaim(UUID_CLAIM,uuid)
                 .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
                 .sign(Algorithm.HMAC512(this.secretKey));
 
@@ -135,7 +135,7 @@ public class JwtService {
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
                     .build() // 반환된 빌더로 JWT verifier 생성
                     .verify(accessToken) // accessToken을 검증하고 유효하지 않다면 예외 발생
-                    .getClaim(EMAIL_CLAIM) // claim(Emial) 가져오기
+                    .getClaim(UUID_CLAIM) // claim(Emial) 가져오기
                     .asString());
         } catch (Exception e) {
             log.error("액세스 토큰이 유효하지 않습니다.");

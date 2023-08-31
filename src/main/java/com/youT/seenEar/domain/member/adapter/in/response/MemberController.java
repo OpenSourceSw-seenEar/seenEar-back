@@ -1,8 +1,8 @@
 package com.youT.seenEar.domain.member.adapter.in.response;
 
 
-import com.youT.seenEar.domain.member.adapter.out.external.request.KakaoLoginRequest;
-import com.youT.seenEar.domain.member.application.service.OAuthLoginService;
+import com.youT.seenEar.domain.member.application.port.in.LoginUseCase;
+import com.youT.seenEar.domain.member.application.port.in.MemberUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MemberController {
 
+    private final LoginUseCase loginUseCase;
+
     @Operation(description = "[노인]로그인")
     @PostMapping("/login/elder")
-    public ResponseEntity<LoginResponse> login(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
-        return null;
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+
+        return ResponseEntity.ok().body(this.loginUseCase.elderLogin(loginRequest));
     }
 }

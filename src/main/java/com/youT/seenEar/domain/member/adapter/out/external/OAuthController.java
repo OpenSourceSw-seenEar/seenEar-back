@@ -2,7 +2,7 @@ package com.youT.seenEar.domain.member.adapter.out.external;
 
 import com.youT.seenEar.domain.member.adapter.in.response.LoginResponse;
 import com.youT.seenEar.domain.member.adapter.out.external.request.KakaoLoginRequest;
-import com.youT.seenEar.domain.member.application.service.OAuthLoginService;
+import com.youT.seenEar.domain.member.application.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
 public class OAuthController {
-    private final OAuthLoginService oAuthLoginService;
+    private final LoginService oAuthLoginService;
     @Operation(description = "[청년] 카카오 로그인")
     @PostMapping("/login/youth")
     public ResponseEntity<LoginResponse> loginKakao(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
