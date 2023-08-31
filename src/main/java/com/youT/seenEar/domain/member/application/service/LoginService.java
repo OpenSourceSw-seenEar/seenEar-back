@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 public class LoginService implements LoginUseCase {
 
     private final MemberRepository memberRepository;
@@ -40,7 +40,6 @@ public class LoginService implements LoginUseCase {
 
         member.updateRefreshToken(serviceRefreshToken);
         return LoginResponse.builder()
-                .memberEmail(member.getEmail())
                 .uuid(member.getUuid())
                 .accessToken(serviceAccessToken)
                 .refreshToken(serviceRefreshToken)
@@ -75,7 +74,6 @@ public class LoginService implements LoginUseCase {
 
         member.updateRefreshToken(serviceRefreshToken);
         return LoginResponse.builder()
-                .memberEmail(member.getEmail())
                 .uuid(member.getUuid())
                 .accessToken(serviceAccessToken)
                 .refreshToken(serviceRefreshToken)

@@ -19,7 +19,7 @@ public class OAuthController {
     @Operation(description = "[청년] 카카오 로그인")
     @PostMapping("/login/youth")
     public ResponseEntity<LoginResponse> loginKakao(@RequestBody KakaoLoginRequest kakaoLoginRequest) {
-        return ResponseEntity.ok(oAuthLoginService.kakaoLogin(kakaoLoginRequest.getAuthorizationCode()));
+        return ResponseEntity.ok(oAuthLoginService.youthLogin(kakaoLoginRequest.getAuthorizationCode()));
     }
 
 }
