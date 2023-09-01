@@ -20,7 +20,6 @@ public class MemberController {
     @Operation(description = "[노인]로그인")
     @PostMapping("/login/elder")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
-
         return ResponseEntity.ok().body(this.loginUseCase.elderLogin(loginRequest));
     }
 }

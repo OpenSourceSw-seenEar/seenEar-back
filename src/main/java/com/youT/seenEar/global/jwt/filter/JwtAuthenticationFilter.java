@@ -4,6 +4,7 @@ package com.youT.seenEar.global.jwt.filter;
 
 import com.youT.seenEar.domain.member.adapter.out.persistence.MemberRepository;
 import com.youT.seenEar.domain.member.application.service.JwtService;
+import com.youT.seenEar.domain.member.domain.CustomUserDetails;
 import com.youT.seenEar.domain.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +35,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String NO_CHECK_URL = "/api/auth";
+        String NO_CHECK_URL = "/api/member/login/elder";
         if (request.getRequestURI().equals(NO_CHECK_URL)) {
             log.info("로그인 진입");
             filterChain.doFilter(request, response);
             return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
         }
 
+        log.info("로그인 이외 페이지 진입 ");
         String refreshToken = jwtService.extractRefreshToken(request)
                 .filter(jwtService::isTokenValid)
                 .orElse(null);
@@ -73,8 +75,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         log.info("checkAccessTokenAndAuthentication() 호출");
         jwtService.extractAccessToken(request)
                 .filter(jwtService::isTokenValid)
-                .ifPresent(accessToken -> jwtService.extractEmail(accessToken)
-                        .ifPresent(email -> memberRepository.findByEmail(email)
+                .ifPresent(accessToken -> jwtService.extractUuid(accessToken)
+                        .ifPresent(uuid -> memberRepository.findByUuid(uuid)
                                 .ifPresent(this::saveAuthentication)));
 
         filterChain.doFilter(request, response);
@@ -82,14 +84,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public void saveAuthentication(Member member) {
 
-        UserDetails userDetailsUser = Member.builder()
-                .email(member.getEmail())
-                .name(member.getName())
-                .build();
+        CustomUserDetails customUserDetail=new CustomUserDetails(member);
 
         Authentication authentication =
-                new UsernamePasswordAuthenticationToken(userDetailsUser, null,
-                        authoritiesMapper.mapAuthorities(userDetailsUser.getAuthorities()));
+                new UsernamePasswordAuthenticationToken(customUserDetail, null,
+                        authoritiesMapper.mapAuthorities(customUserDetail.getAuthorities()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
