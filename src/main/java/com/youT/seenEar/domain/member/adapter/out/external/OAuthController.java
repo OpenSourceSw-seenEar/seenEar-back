@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
 public class OAuthController {
-  
     private final LoginService oAuthLoginService;
     @Operation(description = "[청년] 카카오 로그인")
     @PostMapping("/login/youth")
