@@ -1,6 +1,7 @@
 package com.youT.seenEar.domain.adviceCard.adapter.out.persistence;
 
-import com.youT.seenEar.domain.adviceCard.adapter.in.request.AdviceCardResponse;
+import com.youT.seenEar.domain.adviceCard.adapter.in.response.AdviceCardResponse;
+import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.response.OpenAIResponse;
 import com.youT.seenEar.domain.adviceCard.application.port.out.LoadAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.application.port.out.SaveAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.domain.AdviceCard;
@@ -38,9 +39,11 @@ public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdv
                         .text(randomAdviceCard.getText()).build();
     }
 
+
     @Override
-    public AdviceCard saveElderAdviceCard(Member elder, AdviceCard adviceCard) {
-        return null;
+    public AdviceCard saveElderAdviceCard(AdviceCard adviceCard) {
+
+        return adviceCardRepository.saveAndFlush(adviceCard);
     }
 
     @Override

@@ -1,8 +1,22 @@
-
 spring:
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: off
+
   config:
     import:
       application-aws.yml
+  main:
+    allow-circular-references: true
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+
+
 
   mvc:
     path match:
