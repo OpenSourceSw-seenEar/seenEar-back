@@ -3,6 +3,8 @@ package com.youT.seenEar.domain.adviceCard.domain;
 import com.youT.seenEar.domain.member.domain.Member;
 import com.youT.seenEar.domain.member.domain.MemberType;
 import com.youT.seenEar.global.utils.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +14,9 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
+@Builder
 @Table(name = "AdviceCard")
 public class AdviceCard extends BaseEntity {
 
@@ -29,9 +33,7 @@ public class AdviceCard extends BaseEntity {
     @Lob
     @Column(name = "text")
     private String text;
-    @Lob
-    @Column(name = "speechUrl")
-    private String speechUrl;
+
     // [연관관계] 노인 (1) : 조언 (N)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "advisorId")
@@ -39,5 +41,11 @@ public class AdviceCard extends BaseEntity {
     // [연관관계] 청년 (N) : 조언 (M)
     @OneToMany(mappedBy = "adviceCard")
     List<YouthAdviceMapping> youthAdviceMappingList=new ArrayList<>();
+
+    public void updateConcernType(ConcernType concernType){
+
+        this.concernType=concernType;
+    }
+
 
 }
