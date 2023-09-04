@@ -11,5 +11,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface OpenAIUseCase {
 
-    AdviceCardResponse getText(Member member, MultipartFile multipartFile, AdviceType adviceType);
+    AdviceCardResponse getAdviceText(Member member, MultipartFile multipartFile, AdviceType adviceType);
 }

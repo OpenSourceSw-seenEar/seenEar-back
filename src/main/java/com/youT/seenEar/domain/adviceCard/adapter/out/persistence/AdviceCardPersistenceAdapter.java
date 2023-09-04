@@ -2,7 +2,6 @@ package com.youT.seenEar.domain.adviceCard.adapter.out.persistence;
 
 import com.youT.seenEar.domain.adviceCard.adapter.in.response.AdviceCardResponse;
 import com.youT.seenEar.domain.adviceCard.adapter.in.response.YouthAdviceCardResponse;
-import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.response.OpenAIResponse;
 import com.youT.seenEar.domain.adviceCard.application.port.out.LoadAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.application.port.out.SaveAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.domain.AdviceCard;
@@ -15,11 +14,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdviceCardPort {
 
     private final AdviceCardRepository adviceCardRepository;
@@ -36,11 +38,12 @@ public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdv
 
         AdviceCard randomAdviceCard=adviceCard.getContent().get(0);
         YouthAdviceMapping youthAdviceMapping = YouthAdviceMapping.builder()
-                        .adviceRecipient(member)
-                        .adviceCard(randomAdviceCard).build();
+                .adviceRecipient(member)
+                .adviceCard(randomAdviceCard).build();
         youthAdviceMappingRepository.saveAndFlush(youthAdviceMapping);
         return AdviceCardResponse.builder()
-                        .text(randomAdviceCard.getText()).build();
+                .elderUuid(randomAdviceCard.getAdvisor().getUuid())
+                .text(randomAdviceCard.getText()).build();
     }
 
     @Override
@@ -58,13 +61,10 @@ public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdv
 
 
     @Override
+    @Transactional
     public AdviceCard saveElderAdviceCard(AdviceCard adviceCard) {
 
         return adviceCardRepository.saveAndFlush(adviceCard);
     }
 
-    @Override
-    public AdviceCardResponse saveYouthAdviceMapping(Member youth, AdviceCard adviceCard) {
-        return null;
-    }
 }

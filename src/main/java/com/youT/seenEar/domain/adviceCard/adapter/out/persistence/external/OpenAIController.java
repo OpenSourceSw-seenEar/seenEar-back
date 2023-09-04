@@ -25,16 +25,16 @@ public class OpenAIController {
     public ResponseEntity<AdviceCardResponse> recordHotAdvice (@AuthenticationPrincipal CustomUserDetails customUserDetails ,
                                                                @RequestParam("file")MultipartFile multipartFile) {
 
-        return ResponseEntity.ok().body(this.openAIUseCase.getText(customUserDetails.getMember(), multipartFile, AdviceType.SHORT));
+        return ResponseEntity.ok().body(this.openAIUseCase.getAdviceText(customUserDetails.getMember(), multipartFile, AdviceType.SHORT));
 
     }
 
     @Operation(description = "[노인] 조언카드 녹음하기 착한맛 ")
     @PostMapping("/elder/mild")
     public ResponseEntity<AdviceCardResponse> recordAdvice (@AuthenticationPrincipal CustomUserDetails customUserDetails ,
-                                                        @RequestParam("file")MultipartFile multipartFile) {
+                                                            @RequestParam("file")MultipartFile multipartFile) {
 
-        return ResponseEntity.ok().body(this.openAIUseCase.getText(customUserDetails.getMember(), multipartFile, AdviceType.EXPERIENCE));
+        return ResponseEntity.ok().body(this.openAIUseCase.getAdviceText(customUserDetails.getMember(), multipartFile, AdviceType.EXPERIENCE));
 
     }
 
