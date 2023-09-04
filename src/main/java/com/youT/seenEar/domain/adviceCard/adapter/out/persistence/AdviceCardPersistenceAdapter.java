@@ -1,7 +1,7 @@
 package com.youT.seenEar.domain.adviceCard.adapter.out.persistence;
 
 import com.youT.seenEar.domain.adviceCard.adapter.in.response.AdviceCardResponse;
-import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.response.OpenAIResponse;
+import com.youT.seenEar.domain.adviceCard.adapter.in.response.YouthAdviceCardResponse;
 import com.youT.seenEar.domain.adviceCard.application.port.out.LoadAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.application.port.out.SaveAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.domain.AdviceCard;
@@ -15,6 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -35,12 +38,25 @@ public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdv
 
         AdviceCard randomAdviceCard=adviceCard.getContent().get(0);
         YouthAdviceMapping youthAdviceMapping = YouthAdviceMapping.builder()
-                        .adviceRecipient(member)
-                        .adviceCard(randomAdviceCard).build();
+                .adviceRecipient(member)
+                .adviceCard(randomAdviceCard).build();
         youthAdviceMappingRepository.saveAndFlush(youthAdviceMapping);
         return AdviceCardResponse.builder()
                 .elderUuid(randomAdviceCard.getAdvisor().getUuid())
                 .text(randomAdviceCard.getText()).build();
+    }
+
+    @Override
+    public List<YouthAdviceCardResponse> getAdviceCardList(Member member) {
+        List<YouthAdviceMapping> youthAdviceMappingList = youthAdviceMappingRepository.findByAdviceRecipient(member);
+        return  youthAdviceMappingList.stream().map(youthAdviceMapping ->
+                YouthAdviceCardResponse.builder()
+                        .advisorName(youthAdviceMapping.getAdviceCard().getAdvisor().getName())
+                        .adviceCardId(youthAdviceMapping.getAdviceCard().getId())
+                        .concernType(youthAdviceMapping.getAdviceCard().getConcernType())
+                        .text(youthAdviceMapping.getAdviceCard().getText())
+                        .memberType(youthAdviceMapping.getAdviceCard().getAdvisor().getMemberType())
+                        .build()).collect(Collectors.toList());
     }
 
 

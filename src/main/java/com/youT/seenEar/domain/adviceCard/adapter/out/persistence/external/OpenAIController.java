@@ -32,7 +32,7 @@ public class OpenAIController {
     @Operation(description = "[노인] 조언카드 녹음하기 착한맛 ")
     @PostMapping("/elder/mild")
     public ResponseEntity<AdviceCardResponse> recordAdvice (@AuthenticationPrincipal CustomUserDetails customUserDetails ,
-                                                        @RequestParam("file")MultipartFile multipartFile) {
+                                                            @RequestParam("file")MultipartFile multipartFile) {
 
         return ResponseEntity.ok().body(this.openAIUseCase.getAdviceText(customUserDetails.getMember(), multipartFile, AdviceType.EXPERIENCE));
 

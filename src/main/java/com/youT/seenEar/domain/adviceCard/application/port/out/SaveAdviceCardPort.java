@@ -7,6 +7,6 @@ import com.youT.seenEar.domain.member.domain.Member;
 
 public interface SaveAdviceCardPort {
 
-   AdviceCard saveElderAdviceCard(AdviceCard adviceCard);
+    AdviceCard saveElderAdviceCard(AdviceCard adviceCard);
 
 }
