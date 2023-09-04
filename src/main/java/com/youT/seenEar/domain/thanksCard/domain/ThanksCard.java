@@ -24,6 +24,10 @@ public class ThanksCard extends BaseEntity {
     private String speechUrl;
     @Column(name = "text")
     private String text;
+
+    @Enumerated(value = EnumType.STRING)
+    private OpenStatus openStatus = OpenStatus.valueOf(OpenStatus.OPEN.toString());
+
     // [연관관계] 청년 (1) : 감사카드 (N) : 노인(1)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "thanksYouthId")
@@ -32,5 +36,9 @@ public class ThanksCard extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "thanksElderId")
     private Member thanksElder;
+
+    public void updateOpenStatus(OpenStatus openStatus){
+        this.openStatus = openStatus;
+    }
 
 }

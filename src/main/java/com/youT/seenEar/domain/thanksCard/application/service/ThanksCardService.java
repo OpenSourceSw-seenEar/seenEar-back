@@ -7,9 +7,12 @@ import com.youT.seenEar.domain.adviceCard.domain.AdviceCard;
 import com.youT.seenEar.domain.member.application.port.out.LoadMemberPort;
 import com.youT.seenEar.domain.member.domain.Member;
 import com.youT.seenEar.domain.thanksCard.adapter.in.request.PostThanksCardTextRequest;
+import com.youT.seenEar.domain.thanksCard.adapter.in.response.ElderThanksCardResponse;
 import com.youT.seenEar.domain.thanksCard.adapter.in.response.ThanksCardResponse;
 import com.youT.seenEar.domain.thanksCard.application.port.in.ThanksCardUseCase;
+import com.youT.seenEar.domain.thanksCard.application.port.out.LoadThanksCardPort;
 import com.youT.seenEar.domain.thanksCard.application.port.out.SaveThanksCardPort;
+import com.youT.seenEar.domain.thanksCard.domain.OpenStatus;
 import com.youT.seenEar.domain.thanksCard.domain.ThanksCard;
 import com.youT.seenEar.global.exception.BaseException;
 import com.youT.seenEar.global.exception.ErrorCode;
@@ -22,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -31,6 +36,8 @@ import java.util.Objects;
 public class ThanksCardService implements ThanksCardUseCase {
 
     private final LoadMemberPort loadMemberPort;
+
+    private final LoadThanksCardPort loadThanksCardPort;
 
     private final SaveThanksCardPort saveThanksCardPort;
 
@@ -86,6 +93,19 @@ public class ThanksCardService implements ThanksCardUseCase {
                 .speechUrl(thanksCard.getSpeechUrl())
                 .build();
 
+    }
+
+    @Override
+    public List<ElderThanksCardResponse> getElderThanksCard(Member member) {
+        List<ThanksCard> thanksCardList = loadThanksCardPort.loadElderThanksCard(member);
+        return thanksCardList.stream().map(thanksCard ->
+                ElderThanksCardResponse.builder()
+                        .thanksCardId(thanksCard.getId())
+                        .openStatus(thanksCard.getOpenStatus())
+                        .youthName(thanksCard.getThanksYouth().getName())
+                        .speechUrl(thanksCard.getSpeechUrl())
+                        .text(thanksCard.getText())
+                        .build()).collect(Collectors.toList());
     }
 
 
