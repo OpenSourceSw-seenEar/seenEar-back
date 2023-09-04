@@ -8,6 +8,7 @@ import lombok.Data;
 @Builder
 public class AdviceCardResponse {
 
+    private String elderUuid;
     private String text;
 
 }
