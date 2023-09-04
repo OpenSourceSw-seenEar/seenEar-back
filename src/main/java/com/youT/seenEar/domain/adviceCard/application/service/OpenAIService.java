@@ -43,8 +43,7 @@ public class OpenAIService implements OpenAIUseCase {
     @Value("${open-ai.secretKey}")
     private String secretKey;
     @Override
-    @Transactional
-    public AdviceCardResponse getText(Member member, MultipartFile multipartFile, AdviceType adviceType) {
+    public AdviceCardResponse getAdviceText(Member member, MultipartFile multipartFile, AdviceType adviceType) {
 
         ResponseEntity<OpenAIResponse> response = getOpenAIResponse(multipartFile);
 
@@ -65,7 +64,7 @@ public class OpenAIService implements OpenAIUseCase {
     public ResponseEntity<OpenAIResponse> getOpenAIResponse(MultipartFile multipartFile){
 
       try{
-          String openAIURL="https://api.openai.com/v1/audio/translations";
+          String openAIURL = "https://api.openai.com/v1/audio/transcriptions";
 
           HttpHeaders httpHeaders=new HttpHeaders();
           httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
@@ -83,6 +82,7 @@ public class OpenAIService implements OpenAIUseCase {
           MultiValueMap<String,Object> body = new LinkedMultiValueMap<>();
           body.add("model","whisper-1");
           body.add("file",fileResource);
+          body.add("language","ko");
 
           HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body,httpHeaders);
           RestTemplate restTemplate= new RestTemplate();

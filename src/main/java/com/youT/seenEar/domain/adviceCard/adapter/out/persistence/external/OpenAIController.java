@@ -25,7 +25,7 @@ public class OpenAIController {
     public ResponseEntity<AdviceCardResponse> recordHotAdvice (@AuthenticationPrincipal CustomUserDetails customUserDetails ,
                                                                @RequestParam("file")MultipartFile multipartFile) {
 
-        return ResponseEntity.ok().body(this.openAIUseCase.getText(customUserDetails.getMember(), multipartFile, AdviceType.SHORT));
+        return ResponseEntity.ok().body(this.openAIUseCase.getAdviceText(customUserDetails.getMember(), multipartFile, AdviceType.SHORT));
 
     }
 
@@ -34,7 +34,7 @@ public class OpenAIController {
     public ResponseEntity<AdviceCardResponse> recordAdvice (@AuthenticationPrincipal CustomUserDetails customUserDetails ,
                                                         @RequestParam("file")MultipartFile multipartFile) {
 
-        return ResponseEntity.ok().body(this.openAIUseCase.getText(customUserDetails.getMember(), multipartFile, AdviceType.EXPERIENCE));
+        return ResponseEntity.ok().body(this.openAIUseCase.getAdviceText(customUserDetails.getMember(), multipartFile, AdviceType.EXPERIENCE));
 
     }
 

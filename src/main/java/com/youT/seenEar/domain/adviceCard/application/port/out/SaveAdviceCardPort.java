@@ -8,6 +8,5 @@ import com.youT.seenEar.domain.member.domain.Member;
 public interface SaveAdviceCardPort {
 
    AdviceCard saveElderAdviceCard(AdviceCard adviceCard);
-    AdviceCardResponse saveYouthAdviceMapping(Member youth, AdviceCard adviceCard);
 
 }

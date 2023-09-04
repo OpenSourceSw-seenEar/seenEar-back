@@ -14,8 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 @Repository
 @RequiredArgsConstructor
+@Transactional
 public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdviceCardPort {
 
     private final AdviceCardRepository adviceCardRepository;
@@ -36,18 +39,16 @@ public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdv
                         .adviceCard(randomAdviceCard).build();
         youthAdviceMappingRepository.saveAndFlush(youthAdviceMapping);
         return AdviceCardResponse.builder()
-                        .text(randomAdviceCard.getText()).build();
+                .elderUuid(randomAdviceCard.getAdvisor().getUuid())
+                .text(randomAdviceCard.getText()).build();
     }
 
 
     @Override
+    @Transactional
     public AdviceCard saveElderAdviceCard(AdviceCard adviceCard) {
 
         return adviceCardRepository.saveAndFlush(adviceCard);
     }
 
-    @Override
-    public AdviceCardResponse saveYouthAdviceMapping(Member youth, AdviceCard adviceCard) {
-        return null;
-    }
 }

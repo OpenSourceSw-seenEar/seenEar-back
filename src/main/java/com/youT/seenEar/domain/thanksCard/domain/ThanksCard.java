@@ -2,6 +2,8 @@ package com.youT.seenEar.domain.thanksCard.domain;
 
 import com.youT.seenEar.domain.member.domain.Member;
 import com.youT.seenEar.global.utils.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Getter
+@AllArgsConstructor
+@Builder
 @Table(name = "ThanksCard")
 public class ThanksCard extends BaseEntity {
     @Id
