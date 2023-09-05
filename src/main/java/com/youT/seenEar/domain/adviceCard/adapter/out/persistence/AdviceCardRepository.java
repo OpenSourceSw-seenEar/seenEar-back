@@ -14,5 +14,6 @@ public interface AdviceCardRepository extends JpaRepository<AdviceCard,Long> {
 
     Long countByConcernTypeAndAdviceType(ConcernType concernType, AdviceType adviceType);
 
+    AdviceCard findAdviceCardById(Long id);
 
 }

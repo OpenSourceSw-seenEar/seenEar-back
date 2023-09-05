@@ -1,14 +1,12 @@
 package com.youT.seenEar.domain.adviceCard.application.service;
 
-import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.request.AdviceCardRequest;
-import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.response.AdviceCardResponse;
-import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.response.OpenAIResponse;
+import com.youT.seenEar.domain.adviceCard.adapter.out.external.response.AdviceCardResponse;
+import com.youT.seenEar.domain.adviceCard.adapter.out.external.response.OpenAIResponse;
 import com.youT.seenEar.domain.adviceCard.application.port.in.OpenAIUseCase;
 import com.youT.seenEar.domain.adviceCard.application.port.out.LoadAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.application.port.out.SaveAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.domain.AdviceCard;
 import com.youT.seenEar.domain.adviceCard.domain.AdviceType;
-import com.youT.seenEar.domain.member.adapter.out.external.response.KakaoTokens;
 import com.youT.seenEar.domain.member.domain.Member;
 import com.youT.seenEar.global.exception.BaseException;
 import com.youT.seenEar.global.exception.ErrorCode;
@@ -20,7 +18,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;

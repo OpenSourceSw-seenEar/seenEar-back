@@ -9,6 +9,8 @@ import com.youT.seenEar.domain.adviceCard.domain.AdviceType;
 import com.youT.seenEar.domain.adviceCard.domain.ConcernType;
 import com.youT.seenEar.domain.adviceCard.domain.YouthAdviceMapping;
 import com.youT.seenEar.domain.member.domain.Member;
+import com.youT.seenEar.global.exception.BaseException;
+import com.youT.seenEar.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,6 +59,11 @@ public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdv
                         .text(youthAdviceMapping.getAdviceCard().getText())
                         .memberType(youthAdviceMapping.getAdviceCard().getAdvisor().getMemberType())
                         .build()).collect(Collectors.toList());
+    }
+
+    @Override
+    public AdviceCard findById(Long id) {
+        return adviceCardRepository.findAdviceCardById(id);
     }
 
 

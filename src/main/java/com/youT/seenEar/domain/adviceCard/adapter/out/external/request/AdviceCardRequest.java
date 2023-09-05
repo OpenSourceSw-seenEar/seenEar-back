@@ -1,4 +1,4 @@
-package com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.request;
+package com.youT.seenEar.domain.adviceCard.adapter.out.external.request;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
