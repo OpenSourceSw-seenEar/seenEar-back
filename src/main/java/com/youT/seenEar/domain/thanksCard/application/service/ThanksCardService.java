@@ -1,9 +1,7 @@
 package com.youT.seenEar.domain.thanksCard.application.service;
 
-import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.response.AdviceCardResponse;
-import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.external.response.OpenAIResponse;
+import com.youT.seenEar.domain.adviceCard.adapter.out.external.response.OpenAIResponse;
 import com.youT.seenEar.domain.adviceCard.application.service.OpenAIService;
-import com.youT.seenEar.domain.adviceCard.domain.AdviceCard;
 import com.youT.seenEar.domain.member.application.port.out.LoadMemberPort;
 import com.youT.seenEar.domain.member.domain.Member;
 import com.youT.seenEar.domain.thanksCard.adapter.in.request.PostThanksCardTextRequest;
@@ -12,7 +10,6 @@ import com.youT.seenEar.domain.thanksCard.adapter.in.response.ThanksCardResponse
 import com.youT.seenEar.domain.thanksCard.application.port.in.ThanksCardUseCase;
 import com.youT.seenEar.domain.thanksCard.application.port.out.LoadThanksCardPort;
 import com.youT.seenEar.domain.thanksCard.application.port.out.SaveThanksCardPort;
-import com.youT.seenEar.domain.thanksCard.domain.OpenStatus;
 import com.youT.seenEar.domain.thanksCard.domain.ThanksCard;
 import com.youT.seenEar.global.exception.BaseException;
 import com.youT.seenEar.global.exception.ErrorCode;

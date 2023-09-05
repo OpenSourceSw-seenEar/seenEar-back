@@ -27,9 +27,9 @@ public class AdviceCard extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "adviceType")
     private AdviceType adviceType;
-    @Enumerated(value = EnumType.STRING)
     @Column(name = "concernType")
-    private ConcernType concernType;
+    @Enumerated(value = EnumType.STRING)
+    private ConcernType concernType = ConcernType.valueOf(ConcernType.ELSE.toString());
     @Lob
     @Column(name = "text")
     private String text;
@@ -42,10 +42,6 @@ public class AdviceCard extends BaseEntity {
     @OneToMany(mappedBy = "adviceCard")
     List<YouthAdviceMapping> youthAdviceMappingList=new ArrayList<>();
 
-    public void updateConcernType(ConcernType concernType){
-
-        this.concernType=concernType;
-    }
 
 
 }
