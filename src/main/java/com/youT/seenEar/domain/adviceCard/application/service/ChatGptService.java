@@ -3,6 +3,7 @@ package com.youT.seenEar.domain.adviceCard.application.service;
 import com.youT.seenEar.domain.adviceCard.adapter.in.request.AdviceCardSortRequest;
 import com.youT.seenEar.domain.adviceCard.adapter.in.response.AdviceCardResponse;
 import com.youT.seenEar.domain.adviceCard.adapter.in.response.ChatGptResponse;
+import com.youT.seenEar.domain.adviceCard.adapter.out.persistence.AdviceCardRepository;
 import com.youT.seenEar.domain.adviceCard.application.port.in.ChatGptUseCase;
 import com.youT.seenEar.domain.adviceCard.application.port.out.LoadAdviceCardPort;
 import com.youT.seenEar.domain.adviceCard.domain.AdviceCard;
@@ -18,6 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -27,8 +29,9 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class ChatGptService implements ChatGptUseCase {
 
-
     private final LoadAdviceCardPort loadAdviceCardPort;
+
+
     @Override
     public AdviceCardResponse sortAdviceType(Long id) throws UnsupportedEncodingException {
 
@@ -36,7 +39,8 @@ public class ChatGptService implements ChatGptUseCase {
         log.info(adviceCard.getText());
         ChatGptResponse chatGptResponse =  getChatGptResponse(adviceCard.getText());
         log.info(chatGptResponse.getAdvice());
-        adviceCard.updateConcernType(getConcernType(chatGptResponse.getAdvice()));
+        loadAdviceCardPort.updateConcernType(getConcernType(chatGptResponse.getAdvice()),id);
+        log.info(adviceCard.getConcernType().toString());
 
         return AdviceCardResponse.builder()
                 .elderUuid(adviceCard.getAdvisor().getUuid())

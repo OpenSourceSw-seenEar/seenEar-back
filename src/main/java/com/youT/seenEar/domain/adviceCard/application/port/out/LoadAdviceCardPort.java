@@ -17,4 +17,6 @@ public interface LoadAdviceCardPort {
 
     AdviceCard findById(Long id);
 
+    void updateConcernType(ConcernType concernType, Long id);
+
 }

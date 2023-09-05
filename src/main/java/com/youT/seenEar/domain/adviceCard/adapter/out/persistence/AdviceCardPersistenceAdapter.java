@@ -14,6 +14,7 @@ import com.youT.seenEar.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -64,6 +65,14 @@ public class AdviceCardPersistenceAdapter implements SaveAdviceCardPort, LoadAdv
     @Override
     public AdviceCard findById(Long id) {
         return adviceCardRepository.findAdviceCardById(id);
+    }
+
+    @Transactional
+    @Override
+    public void updateConcernType(ConcernType concernType,Long id) {
+
+        adviceCardRepository.updateConcernType(concernType,id);
+
     }
 
 
